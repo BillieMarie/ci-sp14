@@ -65,8 +65,45 @@ class Mailing_list extends CI_Controller
 		
 		public function insert()
 		{// will insert data entered via add
-			
-			
+		$this->load->model('Mailing_list_model');	
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('email','EMAIL','trim|required|valid_email');
+		
+		
+		if($this->form_validation->run() == FALSE)
+			{//failed validation
+				
+				$this->load->helper('form');
+				$data['title'] = "Add a record!";
+				$data['style'] = "cerulean.css";
+				$data['banner'] = "Data Entry Error";
+				$data['copyright'] = "copyright here";
+				$data['base_url'] = base_url();
+				$this->load->view('header',$data);
+		
+				//var_dump($data['query']);
+				$this->load->view('mailing_list/add_mailing_list',$data);
+		
+				$this->load->view('footer',$data);
+				echo "insert failed";
+				
+			}else{
+				$post = array(
+				'first_name' => $this->input->post('first_name'),
+				'last_name' => $this->input->post('last_name'),
+				'email' => $this->input->post('email'),
+				'address' => $this->input->post('address'),
+				'state_code' => $this->input->post('state_code'),
+				'zip_postal' => $this->input->post('zip_postal'),
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password'),
+				'bio' => $this->input->post('bio'),
+				'interests' => $this->input->post('interests'),
+				'num_tours' => $this->input->post('num_tours'),
+				);
+			}
+			$this->Mailing_list_model->insert($post);
+			echo "Data inserted?";
 		}// end add
 }
 
