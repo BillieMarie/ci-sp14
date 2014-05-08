@@ -68,6 +68,13 @@ class Mailing_list extends CI_Controller
 		$this->load->model('Mailing_list_model');	
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('email','EMAIL','trim|required|valid_email');
+		$this->form_validation->set_rules('first_name','First Name','trim|required');
+		$this->form_validation->set_rules('last_name','Last Name','trim|required');
+		$this->form_validation->set_rules('address','Address','trim|required');
+		$this->form_validation->set_rules('state_code','State Code','trim|required');
+		$this->form_validation->set_rules('zip_postal','Zip Code','trim|required');
+		$this->form_validation->set_rules('username','User Name','trim|required');
+		$this->form_validation->set_rules('password','Password','trim|required');
 		
 		
 		if($this->form_validation->run() == FALSE)
@@ -101,8 +108,9 @@ class Mailing_list extends CI_Controller
 				'interests' => $this->input->post('interests'),
 				'num_tours' => $this->input->post('num_tours'),
 				);
+				$this->Mailing_list_model->insert($post);
 			}
-			$this->Mailing_list_model->insert($post);
+			
 			echo "Data inserted?";
 		}// end add
 }
