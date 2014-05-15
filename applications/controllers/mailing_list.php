@@ -26,8 +26,8 @@ class Mailing_list extends CI_Controller
 		
 		$this->load->view('footer',$data);
 		}// end index
-		
-		
+
+				
 		public function view($id)
 		{// this will show us the data from a single page
 		$this->load->model('Mailing_list_model');
@@ -45,7 +45,8 @@ class Mailing_list extends CI_Controller
 		
 		$this->load->view('footer',$data);
 		}//end view
-		
+
+				
 		public function add()
 		{// is a form to add a new record
 		$this->load->helper('form');
@@ -108,11 +109,14 @@ class Mailing_list extends CI_Controller
 				'interests' => $this->input->post('interests'),
 				'num_tours' => $this->input->post('num_tours'),
 				);
-				$this->Mailing_list_model->insert($post);
+				
+				$id = $this->Mailing_list_model->insert($post);
+				redirect('/mailing_list/view/' . $id);
+				//echo "Data inserted?";
 			}
 			
-			echo "Data inserted?";
-		}// end add
+			
+		}// end insert()
 }
 
 ?>
